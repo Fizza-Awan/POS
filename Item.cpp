@@ -1,0 +1,109 @@
+#include "Item.h"
+
+//Item::Item() = default;
+Item::Item()
+{
+	item_SKU = "123";
+	Description = "Alus";
+	Price = 40;
+	AvailableQuantity = 20;
+	CreationDate = "07/05/2023";
+
+	n_saleLineItems = 0;
+}
+
+Item::Item(const string& item_sku, const string& description, const float price, const int available_quantity,
+           const string& creation_date): item_SKU(item_sku),
+                                         Description(description),
+                                         Price(price),
+                                         AvailableQuantity(available_quantity),
+                                         CreationDate(creation_date)
+{
+	Item::TotalCount++;
+	Item::NextSKU++;
+
+	n_saleLineItems = 0;
+}
+
+Item::~Item()
+{
+	Item::TotalCount--;
+}
+
+string Item::get_item_sku() const
+{
+	return item_SKU;
+}
+
+void Item::set_item_sku(const string& item_sku)
+{
+	item_SKU = item_sku;
+}
+
+string Item::get_description() const
+{
+	return Description;
+}
+
+void Item::set_description(const string& description)
+{
+	Description = description;
+}
+
+float Item::get_price() const
+{
+	return Price;
+}
+
+void Item::set_price(float price)
+{
+	Price = price;
+}
+
+int Item::get_available_quantity() const
+{
+	return AvailableQuantity;
+}
+
+void Item::set_available_quantity(int available_quantity)
+{
+	AvailableQuantity = available_quantity;
+}
+
+string Item::get_creation_date() const
+{
+	return CreationDate;
+}
+
+void Item::set_creation_date(const string& creation_date)
+{
+	CreationDate = creation_date;
+}
+
+void Item::addSaleLineItem(SaleLineItem* saleLineItem)
+{
+	if (this->n_saleLineItems == 0)
+	{
+		this->saleLineItems = new SaleLineItem * [1];
+		this->saleLineItems[0] = saleLineItem;
+		this->n_saleLineItems = 1;
+		return;
+	}
+	addElementToArray<SaleLineItem>(this->saleLineItems, this->n_saleLineItems, saleLineItem);
+	//SaleLineItem** newSaleLineItems = new SaleLineItem * [this->n_saleLineItems + 1];
+	//for (int i = 0; i < this->n_saleLineItems; i++) { newSaleLineItems[i] = this->saleLineItems[i]; }
+	//this->saleLineItems[this->n_saleLineItems] = saleLineItem;
+	//this->n_saleLineItems++;
+	//delete[] this->saleLineItems;
+	//this->saleLineItems = newSaleLineItems;
+}
+
+bool Item::isNotSoldYet()
+{
+	if (this->n_saleLineItems == 0) return true;
+	return false;
+}
+
+int Item::TotalCount = 0;
+
+int Item::NextSKU = 0;

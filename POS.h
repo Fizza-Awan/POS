@@ -1,0 +1,48 @@
+#pragma once
+#ifndef _POS_
+#define _POS_
+
+#include "Sale.h"
+#include <iostream>
+#include<string>
+#include <ctime>
+
+using std::cout;
+using std::cin;
+using std::endl;
+
+class POS
+{
+	Item** items;
+	Sale** sales;
+	Receipt** receipts;
+	Customer** customers;
+
+public:
+	POS();
+	Item** get_items() const;
+	void set_items(Item** items);
+	Sale** get_sales() const;
+	void set_sales(Sale** sales);
+	Receipt** get_receipts() const;
+	void set_receipts(Receipt** receipts);
+	Customer** get_customers() const;
+	void set_customers(Customer** customers);
+	Item* FindItem(string ItemSKU);
+
+
+	void RemoveItem(Item* item);
+	Customer* FindCustomer(const string& cnic);
+
+	SaleLineItem* EnterNewItemInSaleLine();
+
+	void AddNewItem();
+	void ModifyItemDetails();
+	void FindItems();
+	void RemoveCustomer(Customer* customer);
+	void FindCustomers();
+	void AddNewCustomer();
+	void ModifyCustomerDetails();
+	void AddNewSale(Sale* sale);
+};
+#endif
