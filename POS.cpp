@@ -92,7 +92,6 @@ SaleLineItem* POS::EnterNewItemInSaleLine()
 		cout << "Sub-Total: " << SubTotal << endl;
 		auto* saleLineItem = new SaleLineItem(quantity, SubTotal, item);
 		item->addSaleLineItem(saleLineItem);
-
 		return saleLineItem;
 	}
 	else
