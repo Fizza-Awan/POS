@@ -613,3 +613,12 @@ void POS::addCustomer(Customer* customer)
 {
 	addElementToArray(this->customers, Customer::n_customer, customer);
 }
+
+Sale* POS::FindSale(int saleid)
+{
+	for (int i = 0; i < Sale::n_sale; i++)
+		if (saleid == this->get_sales()[i]->get_sale_id())
+			return this->get_sales()[i];
+	return nullptr;
+
+}

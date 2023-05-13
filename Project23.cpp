@@ -66,27 +66,26 @@ int main() {
 		else if (mainMenuOption == 5)
 			exit(0);
 		else if (mainMenuOption == 4) {
-			int id = 0;
+			int Saleid = 0;
 			cout << "Sale ID: ";
-			cin >> id;
-			for (int i = 0;i<Sale::n_sale;i++)
+			cin >> Saleid;
+			Sale Sale* = pos->FindSale(Saleid);
+			if (!Sale)
 			{
-				if (id == pos->get_sales()[i]->get_sale_id())
-				{
-					float amountPaid = 0, amountToBePaid = 0;
-					//correct
-					cout << "Customer Name" << pos->get_sales()[i]->get_customer()->get_name() << endl
+				cout << "No Sale ID found!" << endl << endl;
+			}
+			else {
+				float amountPaid = 0, amountToBePaid = 0;
+				for (int j = 0; j < Sale->get_n_receipt(); j++)
+					amountPaid += Sale->get_receipt()[j]->get_amount();
+				cout << "Customer Name" << Sale->get_customer()->get_name() << endl
 					//idk what should be here
-						<< "Total Sales Amount: " << pos->get_sales()[i]->get_customer()->get_amount_payable() << endl
-					//if amount paid is calculated using the sum of all amounts of receipts of given �Sales ID�. then sales class should have the double pointer of receipts i guess
-						<< "Amount Paid: " << amountPaid << endl
-						//seems correct
-						<< "Remaining Amount: " << pos->get_sales()[i]->get_customer()->get_amount_payable() << endl
-						<< "Amount to be paid: ";
-					cin >> amountToBePaid;
-					//seems correct
-					pos->get_sales()[i]->get_customer()->set_amount_payable(pos->get_sales()[i]->get_customer()->get_amount_payable() - amountToBePaid);
-				}
+					<< "Total Sales Amount: " << Sale->get_customer()->get_amount_payable() << endl
+					<< "Amount Paid: " << amountPaid << endl
+					<< "Remaining Amount: " << Sale->get_customer()->get_amount_payable() << endl
+					<< "Amount to be paid: ";
+				cin >> amountToBePaid;
+				Sale->get_customer()->set_amount_payable(Sale->get_customer()->get_amount_payable() - amountToBePaid);
 			}
 		}
 		else if (mainMenuOption == 3) {

@@ -3,6 +3,16 @@
 int Sale::nextSaleID = 0;
 int Sale::n_sale = 0;
 
+int Sale::get_n_receipt() const
+{
+	return n_receipt;
+}
+
+void Sale::set_n_receipt(int n_receipt)
+{
+	this->n_receipt = n_receipt;
+}
+
 Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_saleLineItems, string Date) : date(Date), status(false), saleLineItems(saleLineItems), n_saleLineItems(n_saleLineItems), customer(customer)
 {
 	receipt = nullptr;
@@ -52,12 +62,12 @@ void Sale::set_sale_line_items(SaleLineItem** sale_line_items)
 	saleLineItems = sale_line_items;
 }
 
-Receipt* Sale::get_receipt() const
+Receipt** Sale::get_receipt() const
 {
 	return receipt;
 }
 
-void Sale::set_receipt(Receipt* receipts)
+void Sale::set_receipt(Receipt** receipts)
 {
 	this->receipt = receipts;
 }
@@ -72,7 +82,7 @@ void Sale::set_customer(Customer* customer)
 	this->customer = customer;
 }
 
-float Sale::getSalesAmout() const
+float Sale::getSalesAmount() const
 {
 	float sum = 0.0f;
 	for (int i = 0; i < n_saleLineItems; i++) {

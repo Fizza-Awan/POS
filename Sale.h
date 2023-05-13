@@ -18,10 +18,13 @@ class Sale
 
 	SaleLineItem** saleLineItems;
 	int n_saleLineItems;
-	Receipt* receipt;
+	Receipt** receipt;
 	Customer* customer;
+	int n_receipt;
 
 public:
+	int get_n_receipt() const;
+	void set_n_receipt(int n_receipt);
 
 	static int n_sale;
 	static int nextSaleID;
@@ -34,10 +37,10 @@ public:
 	void set_status(bool status);
 	SaleLineItem** get_sale_line_items() const;
 	void set_sale_line_items(SaleLineItem** sale_line_items);
-	Receipt* get_receipt() const;
-	void set_receipt(Receipt* receipt);
+	Receipt** get_receipt() const;
+	void set_receipt(Receipt** receipt);
 	Customer* get_customer() const;
 	void set_customer(Customer* customer);
-	float getSalesAmout() const;
+	float getSalesAmount() const;
 };
 #endif

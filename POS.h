@@ -46,5 +46,6 @@ public:
 	void AddNewSale(Sale* sale);
 	void addItem(Item* item);
 	void addCustomer(Customer* customer);
+	Sale* FindSale(int saleid);
 };
 #endif
