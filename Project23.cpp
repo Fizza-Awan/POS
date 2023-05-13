@@ -54,7 +54,7 @@ void printSalesMenu()
 
 int main() {
 	Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Silver);
-	Item * item = new Item("123", "Alus", 40, 20, "07/05/2023");
+	Item* item = new Item("123", "Alus", 40, 20, "07/05/2023");
 	POS* pos = new POS();
 	pos->addItem(item);
 	pos->addCustomer(customer);
@@ -175,6 +175,10 @@ int main() {
 						cout << "Invalid Input!" << endl << "Try Again!";
 					else if (sale_option == 4) {
 						for (int i = 0; i < n_saleLineItems; i++)
+						{
+							saleLineItems[i]->get_item()->set_available_quantity(saleLineItems[i]->get_item()->get_available_quantity() - (saleLineItems[i]->get_quantity()));
+						}
+						for (int i = 0; i < n_saleLineItems; i++)
 							delete[] saleLineItems[i];
 						delete[] saleLineItems;
 						delete[] saleLineItem;
@@ -213,7 +217,7 @@ int main() {
 							sale_option = 0;
 						}
 						else {
-							
+
 							cout << "Sales ID: " << Sale::nextSaleID << "\t\t\t\tCNIC: " << customer->get_cnic() << endl
 								<< "Sales Date: " << date << "\t\t\tName: " << customer->get_name() << endl
 								<< "Type: " << customer->get_type() << endl
