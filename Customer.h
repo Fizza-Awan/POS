@@ -3,6 +3,7 @@
 #define _CUSTOMER_
 
 #include <string>
+#include "Sale.h"
 
 using std::string;
 
@@ -23,6 +24,7 @@ class Customer
 	float SalesLimit;
 	CustomerTypes Type;
 
+	Sale** sales;
 	int n_sale;
 public:
 	Customer(CustomerTypes Type);
@@ -48,5 +50,7 @@ public:
 	bool isNotAssociatedYet();
 	void set_type(const CustomerTypes& type);
 	CustomerTypes get_type();
+	void addSale(Sale* sale);
+	float getTotalSalesAmount();
 };
 #endif

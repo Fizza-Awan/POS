@@ -2,6 +2,7 @@
 #include "SilverCustomer.h"
 #include "GoldCustomer.h"
 #include "PlatinumCustomer.h"
+#include "Utils.cpp"
 
 Customer::Customer(CustomerTypes Type): Type(Type)
 {
@@ -122,6 +123,25 @@ void Customer::set_type(const CustomerTypes& type)
 CustomerTypes Customer::get_type()
 {
 	return Type;
+}
+
+void Customer::addSale(Sale *sale)
+{
+	if (n_sale == 0 ) {
+		this->sales = new Sale*;
+		this->sales[0] = sale;
+		n_sale = 1;
+	}
+	addElementToArray<Sale>(this->sales, n_sale, sale);
+}
+
+float Customer::getTotalSalesAmount()
+{
+	float totalSalesAmount = 0.0f;
+	for (int i = 0; i < n_sale; i++) {
+		totalSalesAmount += this->sales[i]->getSalesAmout();
+	}
+    return totalSalesAmount;
 }
 
 int Customer::n_customer = 0;

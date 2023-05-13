@@ -18,7 +18,8 @@ Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_s
 	receipt = nullptr;
 	SaleId = Sale::nextSaleID;
 	Sale::nextSaleID++;
-	customer->set_n_sale(customer->get_n_sale() + 1);
+	// customer->set_n_sale(customer->get_n_sale() + 1);
+	customer->addSale(this);
 	n_sale++;
 }
 

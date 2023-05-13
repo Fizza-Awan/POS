@@ -80,7 +80,7 @@ int main() {
 					amountPaid += Sale->get_receipt()[j]->get_amount();
 				cout << "Customer Name" << Sale->get_customer()->get_name() << endl
 					//idk what should be here
-					<< "Total Sales Amount: " << Sale->get_customer()->get_amount_payable() << endl
+					<< "Total Sales Amount: " << customer->getTotalSalesAmount() << endl
 					<< "Amount Paid: " << amountPaid << endl
 					<< "Remaining Amount: " << Sale->get_customer()->get_amount_payable() << endl
 					<< "Amount to be paid: ";
