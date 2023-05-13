@@ -17,6 +17,7 @@ class Sale
 	bool status;
 
 	SaleLineItem** saleLineItems;
+	int n_saleLineItems;
 	Receipt* receipt;
 	Customer* customer;
 
@@ -24,7 +25,7 @@ public:
 
 	static int n_sale;
 	static int nextSaleID;
-	Sale(Customer* const customer, SaleLineItem** const saleLineItems, string Date);
+	Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_saleLineItems, string Date);
 	int get_sale_id() const;
 	void set_sale_id(int sale_id);
 	string get_date() const;
@@ -37,5 +38,6 @@ public:
 	void set_receipt(Receipt* receipt);
 	Customer* get_customer() const;
 	void set_customer(Customer* customer);
+	float getSalesAmout() const;
 };
 #endif

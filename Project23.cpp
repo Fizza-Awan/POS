@@ -78,7 +78,7 @@ int main() {
 					cout << "Customer Name" << pos->get_sales()[i]->get_customer()->get_name() << endl
 					//idk what should be here
 						<< "Total Sales Amount: " << pos->get_sales()[i]->get_customer()->get_amount_payable() << endl
-					//if amount paid is calculated using the sum of all amounts of receipts of given “Sales ID”. then sales class should have the double pointer of receipts i guess
+					//if amount paid is calculated using the sum of all amounts of receipts of given ï¿½Sales IDï¿½. then sales class should have the double pointer of receipts i guess
 						<< "Amount Paid: " << amountPaid << endl
 						//seems correct
 						<< "Remaining Amount: " << pos->get_sales()[i]->get_customer()->get_amount_payable() << endl
@@ -187,7 +187,7 @@ int main() {
 								<< "-----------------------------------------------------------------------------------------------------------------------" << endl;
 							cout << "Press any key to continue!" << endl;
 							_getch();
-							auto* sale = new Sale(customer, saleLineItems, date);
+							auto* sale = new Sale(customer, saleLineItems, n_saleLineItems, date);
 							pos->AddNewSale(sale);
 						}
 					}
