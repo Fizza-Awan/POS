@@ -104,6 +104,11 @@ void Sale::set_customer(Customer* customer)
 	this->customer = customer;
 }
 
+int Sale::getNSaleLineItems() const
+{
+    return n_saleLineItems;
+}
+
 float Sale::getSalesAmount() const
 {
 	float sum = 0.0f;

@@ -43,5 +43,6 @@ public:
 	Customer* get_customer() const;
 	void set_customer(Customer* customer);
 	float getSalesAmount() const;
+	int getNSaleLineItems() const;
 };
 #endif
