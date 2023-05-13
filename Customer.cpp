@@ -24,6 +24,16 @@ Customer *Customer::GetCustomer(string CNIC, string Name, string Address, string
 	return customer;
 }
 
+int Customer::get_n_sale() const
+{
+	return n_sale;
+}
+
+void Customer::set_n_sale(int n_sale)
+{
+	this->n_sale = n_sale;
+}
+
 Customer::~Customer () {
 	Customer::n_customer--;
 }

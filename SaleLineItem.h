@@ -24,5 +24,6 @@ public:
 	Item * get_item() const;
 	void set_item(Item * item);
 	float get_SubTotal();
+	~SaleLineItem();
 };
 #endif

@@ -55,8 +55,8 @@ int main() {
 	Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Silver);
 	Item * item = new Item("123", "Alus", 40, 20, "07/05/2023");
 	POS* pos = new POS();
-	pos.addItem(item);
-	pos.addCustomer(customer);
+	pos->addItem(item);
+	pos->addCustomer(customer);
 	int mainMenuOption = 0;
 	do {
 		printMainMenu();
@@ -67,8 +67,27 @@ int main() {
 			exit(0);
 		else if (mainMenuOption == 4) {
 			int id = 0;
-			cout << "Enter the Sales ID: ";
+			cout << "Sale ID: ";
 			cin >> id;
+			for (int i = 0;i<Sale::n_sale;i++)
+			{
+				if (id == pos->get_sales()[i]->get_sale_id())
+				{
+					float amountPaid = 0, amountToBePaid = 0;
+					//correct
+					cout << "Customer Name" << pos->get_sales()[i]->get_customer()->get_name() << endl
+					//idk what should be here
+						<< "Total Sales Amount: " << pos->get_sales()[i]->get_customer()->get_amount_payable() << endl
+					//if amount paid is calculated using the sum of all amounts of receipts of given “Sales ID”. then sales class should have the double pointer of receipts i guess
+						<< "Amount Paid: " << amountPaid << endl
+						//seems correct
+						<< "Remaining Amount: " << pos->get_sales()[i]->get_customer()->get_amount_payable() << endl
+						<< "Amount to be paid: ";
+					cin >> amountToBePaid;
+					//seems correct
+					pos->get_sales()[i]->get_customer()->set_amount_payable(pos->get_sales()[i]->get_customer()->get_amount_payable() - amountToBePaid);
+				}
+			}
 		}
 		else if (mainMenuOption == 3) {
 
@@ -105,8 +124,14 @@ int main() {
 					cin >> sale_option;
 					if (sale_option < 1 || sale_option > 4)
 						cout << "Invalid Input!" << endl << "Try Again!";
-					else if (sale_option == 4)
+					else if (sale_option == 4) {
+						for (int i = 0; i < n_saleLineItems; i++)
+							delete[] saleLineItems[i];
+						delete[] saleLineItems;
+						delete[] saleLineItem;
+						delete[] customer;
 						break;
+					}
 					else if (sale_option == 3) {
 						string itemSKU;
 						cout << "Enter item SKU to remove: ";
@@ -139,6 +164,7 @@ int main() {
 							sale_option = 0;
 						}
 						else {
+							
 							cout << "Sales ID: " << Sale::nextSaleID << "\t\t\t\tCNIC: " << customer->get_cnic() << endl
 								<< "Sales Date: " << date << "\t\t\tName: " << customer->get_name() << endl
 								<< "Type: " << customer->get_type() << endl
@@ -189,7 +215,6 @@ int main() {
 					cin >> CNIC;
 					Customer* customerToRemove = pos->FindCustomer(CNIC);
 					if (customerToRemove)
-						// TODO: Check if customer has sales
 						if (customerToRemove->isNotAssociatedYet())
 						{
 							int confirm = 0;

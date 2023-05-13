@@ -25,7 +25,6 @@ public:
 	static int n_sale;
 	static int nextSaleID;
 	Sale(Customer* const customer, SaleLineItem** const saleLineItems, string Date);
-
 	int get_sale_id() const;
 	void set_sale_id(int sale_id);
 	string get_date() const;

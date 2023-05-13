@@ -1,5 +1,15 @@
 #include "Item.h"
 
+int Item::get_n_sale_line_items() const
+{
+	return n_saleLineItems;
+}
+
+void Item::set_n_sale_line_items(int n_sale_line_items)
+{
+	n_saleLineItems = n_sale_line_items;
+}
+
 Item::Item(const string& item_sku, const string& description, const float price, const int available_quantity,
            const string& creation_date): item_SKU(item_sku),
                                          Description(description),
@@ -9,7 +19,6 @@ Item::Item(const string& item_sku, const string& description, const float price,
 {
 	Item::TotalCount++;
 	Item::NextSKU++;
-
 	n_saleLineItems = 0;
 }
 
@@ -84,6 +93,18 @@ void Item::addSaleLineItem(SaleLineItem* saleLineItem)
 	//this->n_saleLineItems++;
 	//delete[] this->saleLineItems;
 	//this->saleLineItems = newSaleLineItems;
+}
+
+void Item::RemoveSaleLineItem(SaleLineItem* saleLineItem)
+{
+	if (this->n_saleLineItems == 1)
+	{
+		delete[] this->saleLineItems[0];
+		delete[] this->saleLineItems;
+		this->n_saleLineItems = 0;
+		return;
+	}
+	RemoveElementFromArray<SaleLineItem>(this->saleLineItems, this->n_saleLineItems, saleLineItem);
 }
 
 bool Item::isNotSoldYet()

@@ -8,7 +8,18 @@ Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, string 
 	receipt = nullptr;
 	SaleId = Sale::nextSaleID;
 	Sale::nextSaleID++;
+	customer->set_n_sale(customer->get_n_sale() + 1);
 	n_sale++;
+}
+
+int Sale::get_sale_id() const
+{
+	return SaleId;
+}
+
+void Sale::set_sale_id(int sale_id)
+{
+	SaleId = sale_id;
 }
 
 string Sale::get_date() const

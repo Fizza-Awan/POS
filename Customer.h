@@ -28,6 +28,8 @@ public:
 	Customer(CustomerTypes Type);
 	~Customer();
 	static Customer* GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type);
+	int get_n_sale() const;
+	void set_n_sale(int n_sale);
 	static int n_customer;
 	string get_cnic() const;
 	void set_cnic(const string& cnic);

@@ -44,5 +44,7 @@ public:
 	void AddNewCustomer();
 	void ModifyCustomerDetails();
 	void AddNewSale(Sale* sale);
+	void addItem(Item* item);
+	void addCustomer(Customer* customer);
 };
 #endif

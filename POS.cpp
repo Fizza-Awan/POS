@@ -332,7 +332,6 @@ void POS::FindCustomers()
 	cout << "CNIC: ";
 	cin.ignore();
 	getline(cin, CNIC);
-
 	string Name;
 	cout << "Name: ";
 	//cin.ignore();
@@ -346,25 +345,50 @@ void POS::FindCustomers()
 	cout << "Phone: ";
 	getline(cin, Phone);
 
-	string Type;
-	cout << "Type: " << endl
-		<< "1. Gold Customer" << endl
-		<< "2. Platinum Customer" << endl
-		<< "3. Silver Customer" << endl;
-	getline(cin, Type);
 
+	
+	CustomerTypes Type;
+	string type;
+	do {
+		cout << "Enter the Option Number" << endl
+			<< "Type: " << endl
+			<< "1. Gold Customer" << endl
+			<< "2. Platinum Customer" << endl
+			<< "3. Silver Customer" << endl;
+		getline(cin, type);
 
+		if (type == "1") {
+			Type = Gold;
+			break;
+		}
+		else if (type == "2") {
+			Type = Platinum;
+			break;
+		}
+		else if (type == "3") {
+			Type = Silver;
+			break;
+		}
+		else if(type.empty())
+		{
+			break;
+		}
+		else {
+			cout << "Invalid option. Please enter a valid option number." << endl;
+		}
 
-	if (!CNIC.empty() || !Name.empty() || !Email.empty() || !Phone.empty() || !Type.empty())
+	} while (true);
+
+	if (!CNIC.empty() || !Name.empty() || !Email.empty() || !Phone.empty() || !type.empty())
 	{
 		int count = 0;
 		for (int i = 0; i < Customer::n_customer; i++)
-			if ((CNIC.empty() || CNIC == customers[i]->get_cnic()) && (Name.empty() || Name == customers[i]->get_name()) && (Email.empty() || Email == customers[i]->get_email()) && (Phone.empty() || Phone == customers[i]->get_phone()) && (Type.empty() || Type == customers[i]->get_type()))
+			if ((CNIC.empty() || CNIC == customers[i]->get_cnic()) && (Name.empty() || Name == customers[i]->get_name()) && (Email.empty() || Email == customers[i]->get_email()) && (Phone.empty() || Phone == customers[i]->get_phone()) && (type.empty() || Type == customers[i]->get_type()))
 				count++;
 		if (count > 0) {
 			Customer** FoundCustomers = new Customer * [count];
 			for (int i = 0, idx = 0; i < Customer::n_customer; i++)
-				if ((CNIC.empty() || CNIC == customers[i]->get_cnic()) && (Name.empty() || Name == customers[i]->get_name()) && (Email.empty() || Email == customers[i]->get_email()) && (Phone.empty() || Phone == customers[i]->get_phone()) && (Type.empty() || Type == customers[i]->get_type()))
+				if ((CNIC.empty() || CNIC == customers[i]->get_cnic()) && (Name.empty() || Name == customers[i]->get_name()) && (Email.empty() || Email == customers[i]->get_email()) && (Phone.empty() || Phone == customers[i]->get_phone()) && (type.empty() || Type == customers[i]->get_type()))
 				{
 					FoundCustomers[idx] = customers[i];
 					idx++;
@@ -442,7 +466,7 @@ void POS::AddNewCustomer()
 	}
 
 	string Type;
-	cout << "Type: " << endl
+	cout << "Enter the Option Number" << endl << "Type: " << endl
 		<< "1. Gold Customer" << endl
 		<< "2. Platinum Customer" << endl
 		<< "3. Silver Customer" << endl;
@@ -459,26 +483,24 @@ void POS::AddNewCustomer()
 
 	if (confirm == 1)
 	{
-		Customer* customer = nullptr;
 
-		if (stoi(Type) == 1)
+		if (Type == "Gold")
 		{
-			customer = new GoldCustomer(CNIC, Name, Address, Phone, Email);
-		}
-		else if (stoi(Type) == 2)
-		{
-			customer = new PlatinumCustomer(CNIC, Name, Address, Phone, Email);
-		}
-		else if (stoi(Type) == 3)
-		{
-			customer = new SilverCustomer(CNIC, Name, Address, Phone, Email);
-		}
-
-		if (customer != nullptr)
-		{
-			customer->set_type(Type);
+			Customer* customer = Customer::GetCustomer(CNIC, Name, Address, Phone, Email, CustomerTypes::Gold);
+			this->addCustomer(customer);
 			cout << "Customer Information successfully saved" << endl << endl;
-			addElementToArray(this->customers, Customer::n_customer, customer);
+		}
+		else if (Type == "Platinum")
+		{
+			Customer* customer = Customer::GetCustomer(CNIC, Name, Address, Phone, Email, CustomerTypes::Gold);
+			this->addCustomer(customer);
+			cout << "Customer Information successfully saved" << endl << endl;
+		}
+		else if (Type== "Silver")
+		{
+			Customer* customer = Customer::GetCustomer(CNIC, Name, Address, Phone, Email, CustomerTypes::Gold);
+			this->addCustomer(customer);
+			cout << "Customer Information successfully saved" << endl << endl;
 		}
 		else
 		{
@@ -580,4 +602,14 @@ void POS::ModifyCustomerDetails()
 void POS::AddNewSale(Sale* sale)
 {
 	addElementToArray(this->sales, Sale::n_sale, sale);
+}
+
+void POS::addItem(Item* item)
+{
+	addElementToArray(this->items, Item::TotalCount, item);
+}
+
+void POS::addCustomer(Customer* customer)
+{
+	addElementToArray(this->customers, Customer::n_customer, customer);
 }

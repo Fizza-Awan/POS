@@ -1,5 +1,7 @@
 #include "SaleLineItem.h"
 
+#include "Item.h"
+
 int SaleLineItem::nextLineNo = 1;
 
 int SaleLineItem::get_line_no() const
@@ -37,12 +39,17 @@ float SaleLineItem::get_SubTotal()
 	return SubTotal;
 }
 
+SaleLineItem::~SaleLineItem()
+{
+	this->item->RemoveSaleLineItem(this);
+}
+
 SaleLineItem::SaleLineItem(int quantity, float subtotal, Item* item)
 {
 	this->Quantity = quantity;
 	this->SubTotal = subtotal;
-	this->item = item;
-
+	this->item = item;/*
+	item->set_n_sale_line_items(item->get_n_sale_line_items() + 1);*/
 	this->LineNo = SaleLineItem::nextLineNo;
 	SaleLineItem::nextLineNo++;
 }
