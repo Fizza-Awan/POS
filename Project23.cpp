@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Item.h"
+#include "SilverCustomer.h"
 #include "POS.h"
 #include "Utils.cpp"
 
@@ -51,7 +52,11 @@ void printSalesMenu()
 }
 
 int main() {
+	Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Silver);
+	Item * item = new Item("123", "Alus", 40, 20, "07/05/2023");
 	POS* pos = new POS();
+	pos.addItem(item);
+	pos.addCustomer(customer);
 	int mainMenuOption = 0;
 	do {
 		printMainMenu();
@@ -89,7 +94,7 @@ int main() {
 				int n_saleLineItems = 1;
 				auto** saleLineItems = new SaleLineItem * [n_saleLineItems];
 
-				auto* saleLineItem = saleLineItem->EnterNewItemInSaleLine();
+				auto* saleLineItem = pos->EnterNewItemInSaleLine();
 				customer->set_amount_payable(saleLineItem->get_SubTotal());
 
 				saleLineItems[0] = saleLineItem;
@@ -184,6 +189,7 @@ int main() {
 					cin >> CNIC;
 					Customer* customerToRemove = pos->FindCustomer(CNIC);
 					if (customerToRemove)
+						// TODO: Check if customer has sales
 						if (customerToRemove->isNotAssociatedYet())
 						{
 							int confirm = 0;

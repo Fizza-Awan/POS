@@ -1,6 +1,7 @@
 #include "Sale.h"
 
 int Sale::nextSaleID = 0;
+int Sale::n_sale = 0;
 
 Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, string Date) : date(Date), status(false), saleLineItems(saleLineItems), customer(customer)
 {
@@ -30,24 +31,24 @@ void Sale::set_status(bool status)
 	this->status = status;
 }
 
-SaleLineItem* Sale::get_sale_line_items() const
+SaleLineItem** Sale::get_sale_line_items() const
 {
 	return saleLineItems;
 }
 
-void Sale::set_sale_line_items(SaleLineItem* sale_line_items)
+void Sale::set_sale_line_items(SaleLineItem** sale_line_items)
 {
 	saleLineItems = sale_line_items;
 }
 
-Receipt* Sale::get_receipts() const
+Receipt* Sale::get_receipt() const
 {
-	return receipts;
+	return receipt;
 }
 
-void Sale::set_receipts(Receipt* receipts)
+void Sale::set_receipt(Receipt* receipts)
 {
-	this->receipts = receipts;
+	this->receipt = receipts;
 }
 
 Customer* Sale::get_customer() const

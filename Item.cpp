@@ -1,17 +1,5 @@
 #include "Item.h"
 
-//Item::Item() = default;
-Item::Item()
-{
-	item_SKU = "123";
-	Description = "Alus";
-	Price = 40;
-	AvailableQuantity = 20;
-	CreationDate = "07/05/2023";
-
-	n_saleLineItems = 0;
-}
-
 Item::Item(const string& item_sku, const string& description, const float price, const int available_quantity,
            const string& creation_date): item_SKU(item_sku),
                                          Description(description),

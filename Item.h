@@ -24,7 +24,6 @@ public:
 	static int TotalCount;
 	static int NextSKU;
 
-	Item();
 	Item(const string& item_sku, const string& description, const float price, const int available_quantity,
 		const string& creation_date);
 	~Item();

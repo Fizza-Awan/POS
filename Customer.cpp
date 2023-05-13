@@ -1,14 +1,31 @@
 #include "Customer.h"
+#include "SilverCustomer.h"
+#include "GoldCustomer.h"
+#include "PlatinumCustomer.h"
 
-Customer::Customer()
+Customer::Customer(CustomerTypes Type): Type(Type)
 {
-	CNIC = "3520299679023";
-	Name = "Asim";
-	AmountPayable = 0;
-	SalesLimit = 40000;
+}
 
-	n_sale = 0;
+Customer *Customer::GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type)
+{
+	Customer* customer = nullptr;
+    if (Type == CustomerTypes::Silver)
+	{
+		customer = new SilverCustomer(CNIC, Name, Address, Phone, Email);
+	} else if (Type == CustomerTypes::Gold)
+	{
+		customer = new GoldCustomer(CNIC, Name, Address, Phone, Email);
+	} else if (Type == CustomerTypes::Platinum)
+	{
+		customer = new PlatinumCustomer(CNIC, Name, Address, Phone, Email);
+	}
+	if (customer != nullptr) n_customer++;
+	return customer;
+}
 
+Customer::~Customer () {
+	Customer::n_customer--;
 }
 
 string Customer::get_cnic() const
@@ -87,12 +104,12 @@ bool Customer::isNotAssociatedYet()
 	return false;
 }
 
-void Customer::set_type(const string& type)
+void Customer::set_type(const CustomerTypes& type)
 {
 	Type = type;
 }
 
-string Customer::get_type()
+CustomerTypes Customer::get_type()
 {
 	return Type;
 }

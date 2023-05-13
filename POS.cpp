@@ -6,12 +6,8 @@
 #include "SilverCustomer.h"
 
 POS::POS() {
-	this->items = new Item * [1];
-	this->customers = new Customer * [1];
-	this->items[Item::TotalCount] = new Item;
-	this->customers[Customer::n_customer] = new Customer;
-	Customer::n_customer = 1;
-	Item::TotalCount = 1;
+	Customer::n_customer = 0;
+	Item::TotalCount = 0;
 }
 
 Item** POS::get_items() const

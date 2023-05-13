@@ -6,6 +6,12 @@
 
 using std::string;
 
+enum CustomerTypes {
+	Silver,
+	Gold,
+	Platinum
+};
+
 class Customer
 {
 	string CNIC;
@@ -15,12 +21,13 @@ class Customer
 	string Email;
 	float AmountPayable;
 	float SalesLimit;
+	CustomerTypes Type;
 
 	int n_sale;
-	string Type;
-
 public:
-	Customer();
+	Customer(CustomerTypes Type);
+	~Customer();
+	static Customer* GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type);
 	static int n_customer;
 	string get_cnic() const;
 	void set_cnic(const string& cnic);
@@ -37,7 +44,7 @@ public:
 	float get_sales_limit() const;
 	void set_sales_limit(float sales_limit);
 	bool isNotAssociatedYet();
-	void set_type(const string& type);
-	string get_type();
+	void set_type(const CustomerTypes& type);
+	CustomerTypes get_type();
 };
 #endif
