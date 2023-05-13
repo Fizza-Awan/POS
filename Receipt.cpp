@@ -1,8 +1,17 @@
 #include "Receipt.h"
 
-Receipt::Receipt(string receipt_date, const float amount):
-	ReceiptDate(std::move(receipt_date)), amount(amount)
+#include <ctime>
+
+Receipt::Receipt(const float amount): amount(amount)
 {
+	time_t now;
+	time(&now);
+
+	tm localTime;
+	localtime_s(&localTime, &now);
+	ReceiptDate = std::to_string(localTime.tm_mday) + "/" +
+		std::to_string(localTime.tm_mon + 1) + "/" +
+		std::to_string(localTime.tm_year + 1900);
 	ReceiptNo++;
 }
 

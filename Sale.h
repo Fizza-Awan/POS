@@ -25,6 +25,7 @@ class Sale
 public:
 	int get_n_receipt() const;
 	void set_n_receipt(int n_receipt);
+	void AddPayment(Receipt* receipt);
 
 	static int n_sale;
 	static int nextSaleID;

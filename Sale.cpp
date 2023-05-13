@@ -1,4 +1,5 @@
 #include "Sale.h"
+#include "Utils.cpp"
 
 int Sale::nextSaleID = 0;
 int Sale::n_sale = 0;
@@ -11,6 +12,17 @@ int Sale::get_n_receipt() const
 void Sale::set_n_receipt(int n_receipt)
 {
 	this->n_receipt = n_receipt;
+}
+
+void Sale::AddPayment(Receipt* receipt)
+{
+	if (n_receipt ==0)
+	{
+		this->receipt = new Receipt*;
+		this->receipt[0] = receipt;
+		n_receipt = 1;
+	}
+	addElementToArray<Receipt>(this->receipt, n_receipt, receipt);
 }
 
 Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_saleLineItems, string Date) : date(Date), status(false), saleLineItems(saleLineItems), n_saleLineItems(n_saleLineItems), customer(customer)

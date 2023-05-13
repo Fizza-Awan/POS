@@ -69,7 +69,7 @@ int main() {
 			int Saleid = 0;
 			cout << "Sale ID: ";
 			cin >> Saleid;
-			Sale Sale* = pos->FindSale(Saleid);
+			Sale* Sale = pos->FindSale(Saleid);
 			if (!Sale)
 			{
 				cout << "No Sale ID found!" << endl << endl;
@@ -79,13 +79,14 @@ int main() {
 				for (int j = 0; j < Sale->get_n_receipt(); j++)
 					amountPaid += Sale->get_receipt()[j]->get_amount();
 				cout << "Customer Name" << Sale->get_customer()->get_name() << endl
-					//idk what should be here
 					<< "Total Sales Amount: " << customer->getTotalSalesAmount() << endl
 					<< "Amount Paid: " << amountPaid << endl
 					<< "Remaining Amount: " << Sale->get_customer()->get_amount_payable() << endl
 					<< "Amount to be paid: ";
 				cin >> amountToBePaid;
 				Sale->get_customer()->set_amount_payable(Sale->get_customer()->get_amount_payable() - amountToBePaid);
+				auto* receipt = new Receipt(amountToBePaid);
+				Sale->AddPayment(receipt);
 			}
 		}
 		else if (mainMenuOption == 3) {

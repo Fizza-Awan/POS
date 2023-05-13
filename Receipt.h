@@ -13,7 +13,7 @@ class Receipt
 	float amount;
 
 public:
-	Receipt(string receipt_date, const float amount);
+	Receipt(const float amount);
 
 	int get_receipt_no() const;
 	void set_receipt_no(int receipt_no);
