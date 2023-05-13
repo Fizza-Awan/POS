@@ -23,6 +23,15 @@ void Sale::AddPayment(Receipt* receipt)
 		n_receipt = 1;
 	}
 	addElementToArray<Receipt>(this->receipt, n_receipt, receipt);
+	float sumReceipts = 0;
+	for (int i =0;i < n_receipt;i++)
+	{
+		sumReceipts += this->receipt[i]->get_amount();
+	}
+	if (sumReceipts >= this->getSalesAmount())
+	{
+		this->status = true;
+	}
 }
 
 Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_saleLineItems, string Date) : date(Date), status(false), saleLineItems(saleLineItems), n_saleLineItems(n_saleLineItems), customer(customer)
