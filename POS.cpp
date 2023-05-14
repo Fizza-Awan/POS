@@ -8,7 +8,7 @@
 POS::POS() {
 	Customer::n_customer = 0;
 	Item::TotalCount = 0;
-	this->n_items = 0;
+	//this->n_items = 0;
 }
 
 Item** POS::get_items() const

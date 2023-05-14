@@ -64,61 +64,63 @@ int main() {
 		cin >> mainMenuOption;
 		if (mainMenuOption < 1 || mainMenuOption > 5)
 			cout << "Invalid Input!" << endl << "Try Again!";
-		else if (mainMenuOption == 5)
-			ofstream fout('pos.txt');
+		else if (mainMenuOption == 5) {
+			ofstream fout("pos.txt");
 			fout << "Item" << endl;
 			for (int itemIndex = 0; itemIndex < Item::TotalCount; itemIndex++) {
 				fout << "("
-				 << pos->get_items[itemIndex]->get_item_sku() << ","
-				 << pos->get_items[itemIndex]->get_description() << ","
-				 << pos->get_items[itemIndex]->get_price() << ","
-				 << pos->get_items[itemIndex]->get_available_quantity() << ","
-				 << pos->get_items[itemIndex]->get_creation_date() << ","
-				 << ")"
-				 << endl;
+					<< pos->get_items()[itemIndex]->get_item_sku() << ","
+					<< pos->get_items()[itemIndex]->get_description() << ","
+					<< pos->get_items()[itemIndex]->get_price() << ","
+					<< pos->get_items()[itemIndex]->get_available_quantity() << ","
+					<< pos->get_items()[itemIndex]->get_creation_date() << ","
+					<< ")"
+					<< endl;
 			}
 			fout << "Customer" << endl;
 			for (int customerIndex = 0; customerIndex < Customer::n_customer; customerIndex++) {
 				fout << "("
-				 << pos->get_customers()[customerIndex]->get_cnic() << ","
-				 << pos->get_customers()[customerIndex]->get_name() << ","
-				 << pos->get_customers()[customerIndex]->get_address() << ","
-				 << pos->get_customers()[customerIndex]->get_phone() << ","
-				 << pos->get_customers()[customerIndex]->get_email() << ","
-				 << pos->get_customers()[customerIndex]->get_type() << ","
-				 << pos->get_customers()[customerIndex]->get_amount_payable()
-				 << ")"
-				 << endl;
+					<< pos->get_customers()[customerIndex]->get_cnic() << ","
+					<< pos->get_customers()[customerIndex]->get_name() << ","
+					<< pos->get_customers()[customerIndex]->get_address() << ","
+					<< pos->get_customers()[customerIndex]->get_phone() << ","
+					<< pos->get_customers()[customerIndex]->get_email() << ","
+					<< pos->get_customers()[customerIndex]->get_type() << ","
+					<< pos->get_customers()[customerIndex]->get_amount_payable()
+					<< ")"
+					<< endl;
 			}
 			fout << "Sales" << endl;
-			for (int salesIndex = 0; salesIndex < Sale::n_sale; salesIndex ++) {
+			for (int salesIndex = 0; salesIndex < Sale::n_sale; salesIndex++) {
 				fout << "("
-				 << pos->get_sales()[salesIndex]->get_sale_id() << ","
-				 << pos->get_sales()[salesIndex]->get_customer->get_cnic() << ","
-				 << "[";
-				 for (int saleLineItemIndex = 0; saleLineItemIndex < pos->get_sales()[salesIndex]->getNSaleLineItems() - 1; saleLineItemIndex++) {
+					<< pos->get_sales()[salesIndex]->get_sale_id() << ","
+					<< pos->get_sales()[salesIndex]->get_customer()->get_cnic() << ","
+					<< "[";
+				for (int saleLineItemIndex = 0; saleLineItemIndex < pos->get_sales()[salesIndex]->getNSaleLineItems() - 1; saleLineItemIndex++) {
 					fout << pos->get_sales()[salesIndex]->get_sale_line_items()[saleLineItemIndex]->get_line_no() << ",";
-				 }
+				}
 				fout << pos->get_sales()[salesIndex]->get_sale_line_items()[pos->get_sales()[salesIndex]->getNSaleLineItems() - 1]->get_line_no()
-				 << "]" << ","
-				 << "[";
-				 for (int receiptIndex = 0; receiptIndex < pos->get_sales()[salesIndex]->get_n_receipt() - 1; receiptIndex++) {
+					<< "]" << ","
+					<< "[";
+				for (int receiptIndex = 0; receiptIndex < pos->get_sales()[salesIndex]->get_n_receipt() - 1; receiptIndex++) {
 					fout << pos->get_sales()[salesIndex]->get_receipt()[receiptIndex]->get_receipt_no() << ",";
-				 }
+				}
 				fout << pos->get_sales()[salesIndex]->get_receipt()[pos->get_sales()[salesIndex]->get_n_receipt() - 1]->get_receipt_no()
-				 << "]" << ","
-				 << pos->get_sales()[salesIndex]->get_date() << ","
-				 << pos->get_sales()[salesIndex]->is_status()
-				 << ")"
-				 << endl;
+					<< "]" << ","
+					<< pos->get_sales()[salesIndex]->get_date() << ","
+					<< pos->get_sales()[salesIndex]->is_status()
+					<< ")"
+					<< endl;
 			}
 			fout.close();
 			exit(0);
+		}
 		else if (mainMenuOption == 4) {
 			int Saleid = 0;
 			cout << "Sale ID: ";
 			cin >> Saleid;
 			Sale* Sale = pos->FindSale(Saleid);
+			customer = Sale->get_customer();
 			if (!Sale)
 			{
 				cout << "No Sale ID found!" << endl << endl;
@@ -127,13 +129,13 @@ int main() {
 				float amountPaid = 0, amountToBePaid = 0;
 				for (int j = 0; j < Sale->get_n_receipt(); j++)
 					amountPaid += Sale->get_receipt()[j]->get_amount();
-				cout << "Customer Name" << Sale->get_customer()->get_name() << endl
+				cout << "Customer Name" << customer->get_name() << endl
 					<< "Total Sales Amount: " << customer->getTotalSalesAmount() << endl
 					<< "Amount Paid: " << amountPaid << endl
-					<< "Remaining Amount: " << Sale->get_customer()->get_amount_payable() << endl
+					<< "Remaining Amount: " << customer->get_amount_payable() << endl
 					<< "Amount to be paid: ";
 				cin >> amountToBePaid;
-				Sale->get_customer()->set_amount_payable(Sale->get_customer()->get_amount_payable() - amountToBePaid);
+				customer->set_amount_payable(customer->get_amount_payable() - amountToBePaid);
 				auto* receipt = new Receipt(amountToBePaid);
 				Sale->AddPayment(receipt);
 			}
@@ -154,7 +156,7 @@ int main() {
 				<< "Enter CNIC: ";
 			string cnic;
 			cin >> cnic;
-			Customer* customer = pos->FindCustomer(cnic);
+			customer = pos->FindCustomer(cnic);
 
 			if (customer == nullptr)
 				cout << "Customer Not Found!" << endl;
@@ -240,8 +242,8 @@ int main() {
 								<< "-----------------------------------------------------------------------------------------------------------------------" << endl;
 							cout << "Press any key to continue!" << endl;
 							_getch();
-							auto* sale = new Sale(customer, saleLineItems, n_saleLineItems, date);
-							pos->AddNewSale(sale);
+							Sale* sales = new Sale(customer, saleLineItems, n_saleLineItems, date);
+							pos->AddNewSale(sales);
 						}
 					}
 					else if (sale_option == 1) {

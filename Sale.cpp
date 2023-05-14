@@ -99,9 +99,9 @@ Customer* Sale::get_customer() const
 	return customer;
 }
 
-void Sale::set_customer(Customer* customer)
+void Sale::set_customer(Customer* customerr)
 {
-	this->customer = customer;
+	this->customer = customerr;
 }
 
 int Sale::getNSaleLineItems() const
@@ -111,7 +111,7 @@ int Sale::getNSaleLineItems() const
 
 float Sale::getSalesAmount() const
 {
-	float sum = 0.0f;
+	float sum = 0.0;
 	for (int i = 0; i < n_saleLineItems; i++) {
 		sum += this->saleLineItems[i]->get_SubTotal();
 	}

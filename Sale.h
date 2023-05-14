@@ -41,7 +41,7 @@ public:
 	Receipt** get_receipt() const;
 	void set_receipt(Receipt** receipt);
 	Customer* get_customer() const;
-	void set_customer(Customer* customer);
+	void set_customer(Customer* customerr);
 	float getSalesAmount() const;
 	int getNSaleLineItems() const;
 };

@@ -125,7 +125,7 @@ CustomerTypes Customer::get_type()
 	return Type;
 }
 
-void Customer::addSale(Sale *sale)
+void Customer::addSale(Sale* sale)
 {
 	if (n_sale == 0 ) {
 		this->sales = new Sale*;
@@ -139,7 +139,7 @@ float Customer::getTotalSalesAmount()
 {
 	float totalSalesAmount = 0.0f;
 	for (int i = 0; i < n_sale; i++) {
-		totalSalesAmount += this->sales[i]->getSalesAmout();
+		totalSalesAmount += this->sales[i]->getSalesAmount();
 	}
     return totalSalesAmount;
 }
