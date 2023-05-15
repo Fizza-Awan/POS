@@ -1,13 +1,9 @@
 #pragma once
-
 #ifndef _CUSTOMER_
 #define _CUSTOMER_
 
 #include <string>
-
 #include "Sale.h"
-
-class Sale;
 
 using std::string;
 

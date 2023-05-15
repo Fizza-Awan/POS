@@ -34,7 +34,7 @@ void Sale::AddPayment(Receipt* receipt)
 	}
 }
 
-Sale::Sale(Customer* customer, SaleLineItem** saleLineItems, int n_saleLineItems, string Date) : date(Date), status(false), saleLineItems(saleLineItems), n_saleLineItems(n_saleLineItems), customer(customer)
+Sale::Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_saleLineItems, string Date) : date(Date), status(false), saleLineItems(saleLineItems), n_saleLineItems(n_saleLineItems), customer(customer)
 {
 	receipt = nullptr;
 	SaleId = Sale::nextSaleID;

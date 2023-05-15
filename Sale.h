@@ -1,5 +1,4 @@
 #pragma once
-
 #ifndef _SALE_
 #define _SALE_
 
@@ -8,8 +7,6 @@
 #include "Customer.h"
 #include "Receipt.h"
 #include "SaleLineItem.h"
-
-class Customer;
 
 using std::string;
 
@@ -32,7 +29,7 @@ public:
 
 	static int n_sale;
 	static int nextSaleID;
-	Sale(Customer* customer, SaleLineItem** saleLineItems, int n_saleLineItems, string Date);
+	Sale(Customer* const customer, SaleLineItem** const saleLineItems, int n_saleLineItems, string Date);
 	int get_sale_id() const;
 	void set_sale_id(int sale_id);
 	string get_date() const;
