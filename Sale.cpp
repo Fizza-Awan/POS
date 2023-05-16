@@ -16,7 +16,7 @@ void Sale::set_n_receipt(int n_receipt)
 
 void Sale::AddPayment(Receipt* receipt)
 {
-	if (n_receipt ==0)
+	if (n_receipt == 0)
 	{
 		this->receipt = new Receipt*;
 		this->receipt[0] = receipt;

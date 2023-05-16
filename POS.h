@@ -17,8 +17,12 @@ class POS
 	Sale** sales;
 	Receipt** receipts;
 	Customer** customers;
+	int n_receipts;
 
 public:
+	int get_n_receipts() const;
+	void set_n_receipts(int n_receipts);
+
 	POS();
 	Item** get_items() const;
 	void set_items(Item** items);
@@ -47,5 +51,6 @@ public:
 	void addItem(Item* item);
 	void addCustomer(Customer* customer);
 	Sale* FindSale(int saleid);
+	void AddNewReceipts(Sale* sale);
 };
 #endif

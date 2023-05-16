@@ -34,7 +34,7 @@ void SaleLineItem::set_item(Item* item)
 	this->item = item;
 }
 
-float SaleLineItem::get_SubTotal()
+float SaleLineItem::get_SubTotal() const
 {
 	return SubTotal;
 }
@@ -50,6 +50,6 @@ SaleLineItem::SaleLineItem(int quantity, float subtotal, Item* item)
 	this->SubTotal = subtotal;
 	this->item = item;/*
 	item->set_n_sale_line_items(item->get_n_sale_line_items() + 1);*/
-	this->LineNo = SaleLineItem::nextLineNo;
-	SaleLineItem::nextLineNo++;
+	this->LineNo = nextLineNo;
+	nextLineNo++;
 }

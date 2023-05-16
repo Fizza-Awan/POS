@@ -2,7 +2,7 @@
 
 #include <ctime>
 
-Receipt::Receipt(const float amount): amount(amount)
+Receipt::Receipt( float amount): amount(amount)
 {
 	time_t now;
 	time(&now);

@@ -23,7 +23,7 @@ public:
 	void set_quantity(int quantity);
 	Item * get_item() const;
 	void set_item(Item * item);
-	float get_SubTotal();
+	float get_SubTotal() const;
 	~SaleLineItem();
 };
 #endif

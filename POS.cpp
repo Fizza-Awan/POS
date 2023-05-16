@@ -5,9 +5,21 @@
 #include "PlatinumCustomer.h"
 #include "SilverCustomer.h"
 
+int POS::get_n_receipts() const
+{
+	return n_receipts;
+}
+
+void POS::set_n_receipts(int n_receipts)
+{
+	this->n_receipts = n_receipts;
+}
+
 POS::POS() {
 	Customer::n_customer = 0;
 	Item::TotalCount = 0;
+	n_receipts = 0;
+	receipts = nullptr;
 	//this->n_items = 0;
 }
 
@@ -95,8 +107,7 @@ SaleLineItem* POS::EnterNewItemInSaleLine()
 		item->addSaleLineItem(saleLineItem);
 		return saleLineItem;
 	}
-	else
-		cout << "Item not found!" << endl;
+	return nullptr;
 }
 
 void POS::AddNewItem()
@@ -620,5 +631,12 @@ Sale* POS::FindSale(int saleid)
 		if (saleid == this->get_sales()[i]->get_sale_id())
 			return this->get_sales()[i];
 	return nullptr;
+
+}
+
+void POS::AddNewReceipts(Sale* sale)
+{
+	for (int i = 0; i < sale->get_n_receipt(); i++)
+		addElementToArray<Receipt>(this->receipts,n_receipts, sale->get_receipt()[i]);
 
 }
