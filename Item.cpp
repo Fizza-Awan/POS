@@ -17,14 +17,14 @@ Item::Item(const string& item_sku, const string& description, const float price,
                                          AvailableQuantity(available_quantity),
                                          CreationDate(creation_date)
 {
-	Item::TotalCount++;
-	Item::NextSKU++;
+	//TotalCount++;
+	//NextSKU++;
 	n_saleLineItems = 0;
 }
 
 Item::~Item()
 {
-	Item::TotalCount--;
+	TotalCount--;
 }
 
 string Item::get_item_sku() const

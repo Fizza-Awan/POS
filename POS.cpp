@@ -63,7 +63,6 @@ void POS::set_customers(Customer** customers)
 	this->customers = customers;
 }
 
-
 Item* POS::FindItem(string ItemSKU)
 {
 	for (int i = 0; i < Item::TotalCount; i++)
@@ -117,7 +116,7 @@ void POS::AddNewItem()
 	cin >> itemSKU;
 
 	string description;
-	cout << "Enter a string: ";
+	cout << "Enter name of item: ";
 	cin.ignore();
 	getline(cin, description);
 
@@ -146,10 +145,9 @@ void POS::AddNewItem()
 
 	if (confirm == 1)
 	{
-		Item* item = nullptr;
-		item = new Item(itemSKU, description, price, quantity, date);
+		auto* item = new Item(itemSKU, description, price, quantity, date);
 		cout << "Item Information successfully saved" << endl << endl;
-		addElementToArray(this->items, Item::TotalCount, item);
+		addElementToArray<Item>(this->items, Item::TotalCount, item);
 	}
 	else cout << "Item Information not Stored!" << endl << endl;
 }
@@ -160,7 +158,7 @@ void POS::ModifyItemDetails()
 	cout << "Item_SKU: ";
 	cin >> itemSKU;
 
-	Item* ItemFound = FindItem(itemSKU);
+	Item* ItemFound = this->FindItem(itemSKU);
 	if (ItemFound != nullptr)
 	{
 		cout << "Description: " << ItemFound->get_description() << endl;
@@ -248,11 +246,11 @@ void POS::FindItems()
 	cout << "Item_SKU: ";
 	cin.ignore();
 	getline(cin, itemSKU);
-	while (itemSKU.empty())
+	/*while (itemSKU.empty())
 	{
 		cout << "Item SKU cannot be empty. Please enter a valid item SKU: ";
 		getline(cin, itemSKU);
-	}
+	}*/
 
 	string description;
 	cout << "Description: ";
@@ -320,7 +318,7 @@ void POS::FindItems()
 			cout << "No item found. Returning to items Menu!" << endl;
 	}
 	else
-		cout << "No Item Modified!" << endl;
+		cout << "No Item Searched!" << endl;
 
 	delete price;
 	delete quantity;
@@ -495,19 +493,19 @@ void POS::AddNewCustomer()
 	if (confirm == 1)
 	{
 
-		if (Type == "Gold")
+		if (Type == "1")
 		{
 			Customer* customer = Customer::GetCustomer(CNIC, Name, Address, Phone, Email, CustomerTypes::Gold);
 			this->addCustomer(customer);
 			cout << "Customer Information successfully saved" << endl << endl;
 		}
-		else if (Type == "Platinum")
+		else if (Type == "2")
 		{
 			Customer* customer = Customer::GetCustomer(CNIC, Name, Address, Phone, Email, CustomerTypes::Gold);
 			this->addCustomer(customer);
 			cout << "Customer Information successfully saved" << endl << endl;
 		}
-		else if (Type== "Silver")
+		else if (Type== "3")
 		{
 			Customer* customer = Customer::GetCustomer(CNIC, Name, Address, Phone, Email, CustomerTypes::Gold);
 			this->addCustomer(customer);

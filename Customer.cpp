@@ -21,7 +21,10 @@ Customer *Customer::GetCustomer(string CNIC, string Name, string Address, string
 	{
 		customer = new PlatinumCustomer(CNIC, Name, Address, Phone, Email);
 	}
-	if (customer != nullptr) n_customer++;
+	if (customer != nullptr) {
+		customer->AmountPayable = 0;
+		//n_customer++;
+	}
 	return customer;
 }
 

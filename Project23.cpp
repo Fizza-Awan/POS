@@ -116,7 +116,7 @@ int main() {
 		printMainMenu();
 		cin >> mainMenuOption;
 		if (mainMenuOption < 1 || mainMenuOption > 5)
-			cout << "Invalid Input!" << endl << "Try Again!";
+			cout << "Invalid Input!" << endl << "Try Again!" << endl;
 		else if (mainMenuOption == 5) {
 			ofstream fout("pos.txt");
 			if (Item::TotalCount > 0) {
@@ -293,7 +293,7 @@ int main() {
 					printSalesMenu();
 					cin >> sale_option;
 					if (sale_option < 1 || sale_option > 4)
-						cout << "Invalid Input!" << endl << "Try Again!";
+						cout << "Invalid Input!" << endl << "Try Again!" << endl;
 					else if (sale_option == 4) {
 						for (int i = 0; i < n_saleLineItems; i++)
 						{
@@ -387,7 +387,7 @@ int main() {
 				printCustomersMenu();
 				cin >> customer_option;
 				if (customer_option < 1 || customer_option > 5)
-					cout << "Invalid Input!" << endl << "Try Again!";
+					cout << "Invalid Input!" << endl << "Try Again!" << endl;
 				else if (customer_option == 5)
 					break;
 				else if (customer_option == 4) {
@@ -435,7 +435,7 @@ int main() {
 				printItemsMenu();
 				cin >> item_option;
 				if (item_option < 1 || item_option > 5)
-					cout << "Invalid Input!" << endl << "Try Again!";
+					cout << "Invalid Input!" << endl << "Try Again!" << endl;
 				else if (item_option == 5)
 					break;
 				else if (item_option == 4) {
