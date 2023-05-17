@@ -31,7 +31,7 @@ class Customer
 	Sale** sales;
 	int n_sale;
 public:
-	Customer(CustomerTypes Type);
+	//Customer(CustomerTypes Type);
 	~Customer();
 	static Customer* GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type);
 	int get_n_sale() const;

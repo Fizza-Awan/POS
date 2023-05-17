@@ -106,7 +106,7 @@ int main() {
 	}
 	fin.close();
 
-	Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Silver);
+	Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Gold);
 	Item* item = new Item("123", "Alus", 40, 20, "07/05/2023");
 	POS* pos = new POS();
 	pos->addItem(item);
@@ -141,6 +141,7 @@ int main() {
 						<< pos->get_customers()[customerIndex]->get_address() << ","
 						<< pos->get_customers()[customerIndex]->get_phone() << ","
 						<< pos->get_customers()[customerIndex]->get_email() << ","
+					//compare and store manually
 						<< pos->get_customers()[customerIndex]->get_type() << ","
 						<< pos->get_customers()[customerIndex]->get_amount_payable()
 						<< ")"

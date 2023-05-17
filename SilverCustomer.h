@@ -8,6 +8,6 @@ class SilverCustomer :
     public Customer
 {
 public:
-	SilverCustomer(const string& cnic, const string& name, const string& address, const std::string& phone, const std::string& email);
+	SilverCustomer(const string& cnic, const string& name, const string& address, const std::string& phone, const std::string& email, CustomerTypes Type);
 };
 #endif

@@ -21,7 +21,6 @@ class Item
 
 public:
 	static int TotalCount;
-	static int NextSKU;
 	int get_n_sale_line_items() const;
 	void set_n_sale_line_items(int n_sale_line_items);
 	Item(const string& item_sku, const string& description, const float price, const int available_quantity,

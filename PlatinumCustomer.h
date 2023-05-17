@@ -12,6 +12,6 @@ class PlatinumCustomer :
 public:
     float get_discount() const;
     void set_discount(float discount);
-    PlatinumCustomer(const string& cnic, const string& name, const string& address, const std::string& phone, const std::string& email);
+    PlatinumCustomer(const string& cnic, const string& name, const string& address, const std::string& phone, const std::string& email, CustomerTypes Type);
 };
 #endif

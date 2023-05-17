@@ -4,22 +4,22 @@
 #include "PlatinumCustomer.h"
 #include "Utils.cpp"
 
-Customer::Customer(CustomerTypes Type): Type(Type)
-{
-}
+//Customer::Customer(CustomerTypes Type): Type(Type)
+//{
+//}
 
 Customer *Customer::GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type)
 {
 	Customer* customer = nullptr;
     if (Type == CustomerTypes::Silver)
 	{
-		customer = new SilverCustomer(CNIC, Name, Address, Phone, Email);
+		customer = new SilverCustomer(CNIC, Name, Address, Phone, Email, Type);
 	} else if (Type == CustomerTypes::Gold)
 	{
-		customer = new GoldCustomer(CNIC, Name, Address, Phone, Email);
+		customer = new GoldCustomer(CNIC, Name, Address, Phone, Email, Type);
 	} else if (Type == CustomerTypes::Platinum)
 	{
-		customer = new PlatinumCustomer(CNIC, Name, Address, Phone, Email);
+		customer = new PlatinumCustomer(CNIC, Name, Address, Phone, Email, Type);
 	}
 	if (customer != nullptr) {
 		customer->AmountPayable = 0;

@@ -11,8 +11,9 @@ void GoldCustomer::set_discount(float discount)
 }
 
 GoldCustomer::GoldCustomer(const string& cnic, const string& name, const string& address, const string& phone,
-	const string& email) : Customer(CustomerTypes::Silver)
+	const string& email, CustomerTypes Type)
 {
+	set_type(Type);
 	set_cnic(cnic);
 	set_name(name);
 	set_address(address);

@@ -114,5 +114,3 @@ bool Item::isNotSoldYet()
 }
 
 int Item::TotalCount = 0;
-
-int Item::NextSKU = 0;
