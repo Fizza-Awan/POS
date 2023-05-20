@@ -33,6 +33,10 @@ Receipt *Receipt::fromString(string receiptStr, Sale **sales, int n_sales)
 	string ReceiptDate;
 	getline(ss, ReceiptDate, ',');
 
+	string saleId_s;
+	getline(ss, saleId_s, ',');
+	int saleId = std::stoi(saleId_s);
+
 	float amount;
 	string amount_s;
 	getline(ss, amount_s, ',');
@@ -42,7 +46,6 @@ Receipt *Receipt::fromString(string receiptStr, Sale **sales, int n_sales)
 	receipt->set_receipt_date(ReceiptDate);
 	receipt->set_receipt_no(ReceiptNo);
 
-	int saleId;
 	for (int i = 0; i < n_sales; i++) {
 		if (sales[i]->get_sale_id() == saleId) {
 			sales[i]->AddPayment(receipt);
