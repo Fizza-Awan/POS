@@ -18,7 +18,11 @@ void POS::set_n_receipts(int n_receipts)
 POS::POS() {
 	Customer::n_customer = 0;
 	Item::TotalCount = 0;
+	Sale::n_sale = 0;
 	n_receipts = 0;
+	items = nullptr;
+	customers = nullptr;
+	sales = nullptr;
 	receipts = nullptr;
 	//this->n_items = 0;
 }
@@ -133,7 +137,7 @@ void POS::AddNewItem()
 	time(&now);
 
 	tm localTime;
-	localtime_s(&localTime, &now);
+	localtime_r(&now, &localTime);
 
 	// Format the date as dd/mm/yyyy
 	string date = std::to_string(localTime.tm_mday) + "/" +
@@ -610,17 +614,17 @@ void POS::ModifyCustomerDetails()
 
 void POS::AddNewSale(Sale* sale)
 {
-	addElementToArray(this->sales, Sale::n_sale, sale);
+	addElementToArray<Sale>(this->sales, Sale::n_sale, sale);
 }
 
 void POS::addItem(Item* item)
 {
-	addElementToArray(this->items, Item::TotalCount, item);
+	addElementToArray<Item>(this->items, Item::TotalCount, item);
 }
 
 void POS::addCustomer(Customer* customer)
 {
-	addElementToArray(this->customers, Customer::n_customer, customer);
+	addElementToArray<Customer>(this->customers, Customer::n_customer, customer);
 }
 
 Sale* POS::FindSale(int saleid)
@@ -632,9 +636,7 @@ Sale* POS::FindSale(int saleid)
 
 }
 
-void POS::AddNewReceipts(Sale* sale)
+void POS::AddNewReceipts(Receipt* receipt)
 {
-	for (int i = 0; i < sale->get_n_receipt(); i++)
-		addElementToArray<Receipt>(this->receipts,n_receipts, sale->get_receipt()[i]);
-
+	addElementToArray<Receipt>(this->receipts,n_receipts, receipt);
 }

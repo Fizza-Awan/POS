@@ -6,6 +6,15 @@
 template <typename Type>
 void addElementToArray(Type**& items, int& n_items, Type* item)
 {
+
+	if (n_items == 0 && items == nullptr)
+	{
+		items = new Type * [1];
+		items[0] = item;
+		n_items = 1;
+		return;
+	}
+
 	Type** newSaleLineItems = new Type * [n_items + 1];
 
 	for (int i = 0; i < n_items; i++) { newSaleLineItems[i] = items[i]; }

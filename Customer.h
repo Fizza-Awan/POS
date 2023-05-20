@@ -4,6 +4,7 @@
 #define _CUSTOMER_
 
 #include <string>
+#include <sstream>
 
 #include "Sale.h"
 
@@ -34,6 +35,7 @@ public:
 	//Customer(CustomerTypes Type);
 	~Customer();
 	static Customer* GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type);
+	static Customer* fromString(string item);
 	int get_n_sale() const;
 	void set_n_sale(int n_sale);
 	static int n_customer;

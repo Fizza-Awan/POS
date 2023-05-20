@@ -3,6 +3,9 @@
 #define _RECEIPT_
 
 #include <string>
+#include <sstream>
+
+class Sale;
 
 using std::string;
 
@@ -14,6 +17,8 @@ class Receipt
 
 public:
 	Receipt(float amount);
+
+	static Receipt* fromString(string receiptStr, Sale** sales, int n_sales);
 
 	int get_receipt_no() const;
 	void set_receipt_no(int receipt_no);

@@ -1,5 +1,7 @@
 #include "Sale.h"
 #include "Utils.cpp"
+#include "Customer.h"
+#include "SaleLineItem.h"
 
 int Sale::nextSaleID = 0;
 int Sale::n_sale = 0;
@@ -84,7 +86,65 @@ void Sale::set_sale_line_items(SaleLineItem** sale_line_items)
 	saleLineItems = sale_line_items;
 }
 
-Receipt** Sale::get_receipt() const
+Sale* Sale::fromString(string itemString, Customer** customers, int n_customers)
+{
+	std::stringstream ss(itemString.substr(1, itemString.length()-2));
+
+	int SaleId;
+	string date;
+	bool status;
+
+	string SaleId_s;
+	getline(ss, SaleId_s, ',');
+	SaleId = std::stoi(SaleId_s);
+
+	Customer* customer = nullptr;
+	string customerCNIC;
+	getline(ss, customerCNIC, ',');
+	for (int i = 0; i < n_customers; i++) {
+		if (customers[i]->get_cnic() == customerCNIC) {
+			customer = customers[i];
+		}
+	}
+
+	// SaleLineItem** this_saleLineItems = nullptr;
+	// int this_n_saleLineItems = 0;
+	// string saleLineItemNo_s;
+	// getline(ss, saleLineItemNo_s, ',');
+	// saleLineItemNo_s = saleLineItemNo_s.substr(1);
+	// do {
+	// 	int saleLineItemNo = std::stoi(saleLineItemNo_s);
+	// 	for (int i = 0; i < n_saleLineItems; i++) {
+	// 		if (saleLineItems[i]->get_line_no() == saleLineItemNo) {
+	// 			addElementToArray<SaleLineItem>(this_saleLineItems, this_n_saleLineItems, saleLineItems[i]);
+	// 		}
+	// 	}
+	// } while (saleLineItemNo_s[saleLineItemNo_s.length()-1] == ']');
+	// saleLineItemNo_s = saleLineItemNo_s.substr(0, saleLineItemNo_s.length()-1);
+	// int saleLineItemNo = std::stoi(saleLineItemNo_s);
+	// for (int i = 0; i < n_saleLineItems; i++) {
+	// 	if (saleLineItems[i]->get_line_no() == saleLineItemNo) {
+	// 		addElementToArray<SaleLineItem>(this_saleLineItems, this_n_saleLineItems, saleLineItems[i]);
+	// 	}
+	// }
+
+	getline(ss, date, ',');
+
+	string status_s;
+	getline(ss, status_s, ',');
+	status = std::stoi(status_s);
+
+    auto sale = new Sale(customer, nullptr, 0, date);
+	sale->set_status(status);
+	return sale;
+}
+
+void Sale::add_sale_line_item(SaleLineItem *sale_line_item)
+{
+	addElementToArray<SaleLineItem>(this->saleLineItems, this->n_saleLineItems, sale_line_item);
+}
+
+Receipt **Sale::get_receipt() const
 {
 	return receipt;
 }

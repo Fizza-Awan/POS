@@ -2,7 +2,13 @@
 #ifndef _SALELINEITEM_
 #define _SALELINEITEM_
 
+#include <string>
+#include <sstream>
+
+using namespace std;
+
 class Item;
+class Sale;
 
 class SaleLineItem
 {
@@ -17,6 +23,8 @@ public:
 	static int nextLineNo;
 
 	SaleLineItem(int quantity, float subtotal, Item* item);
+	static SaleLineItem* fromString(string itemString, Item** items, int n_items, Sale** sales, int n_sales);
+
 	int get_line_no() const;
 	void set_line_no(int line_no);
 	int get_quantity() const;

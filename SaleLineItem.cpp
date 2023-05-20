@@ -1,6 +1,7 @@
 #include "SaleLineItem.h"
 
 #include "Item.h"
+#include "Sale.h"
 
 int SaleLineItem::nextLineNo = 1;
 
@@ -44,7 +45,49 @@ SaleLineItem::~SaleLineItem()
 	this->item->RemoveSaleLineItem(this);
 }
 
-SaleLineItem::SaleLineItem(int quantity, float subtotal, Item* item)
+SaleLineItem* SaleLineItem::fromString(string itemString, Item **items, int n_items, Sale** sales, int n_sales)
+{
+	int LineNo;
+	int Quantity;
+
+	float SubTotal;
+
+	std::stringstream ss(itemString.substr(1, itemString.length()-2));
+
+	string LineNo_s;
+	getline(ss, LineNo_s, ',');
+	LineNo = std::stoi(LineNo_s);
+
+	Sale* sale = nullptr;
+	string saleId_s;
+	getline(ss, saleId_s, ',');
+	int saleId = std::stoi(saleId_s);
+	for (int i = 0; i < n_sales; i++) {
+		if (saleId == sales[i]->get_sale_id()) {
+			sale = sales[i];
+		}
+	}
+
+	Item* item = nullptr;
+	string item_SKU;
+	getline(ss, item_SKU, ',');
+	for (int i = 0; i < n_items; i++) {
+		if (item_SKU == items[i]->get_item_sku()) {
+			item  = items[i];
+		}
+	}
+
+	string Quantity_s;
+	getline(ss, Quantity_s, ',');
+	Quantity = std::stoi(Quantity_s);
+
+    auto saleLineItem = new SaleLineItem(Quantity, Quantity*item->get_price(), item);
+	saleLineItem->LineNo = LineNo;
+	sale->add_sale_line_item(saleLineItem);
+	return saleLineItem;
+}
+
+SaleLineItem::SaleLineItem(int quantity, float subtotal, Item *item)
 {
 	this->Quantity = quantity;
 	this->SubTotal = subtotal;

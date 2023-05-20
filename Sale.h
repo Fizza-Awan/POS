@@ -5,11 +5,10 @@
 
 #include <string>
 
-#include "Customer.h"
 #include "Receipt.h"
-#include "SaleLineItem.h"
 
 class Customer;
+class SaleLineItem;
 
 using std::string;
 
@@ -33,6 +32,7 @@ public:
 	static int n_sale;
 	static int nextSaleID;
 	Sale(Customer* customer, SaleLineItem** saleLineItems, int n_saleLineItems, string Date);
+	static Sale* fromString(string itemString, Customer** customers, int n_customers);
 	int get_sale_id() const;
 	void set_sale_id(int sale_id);
 	string get_date() const;
@@ -41,6 +41,7 @@ public:
 	void set_status(bool status);
 	SaleLineItem** get_sale_line_items() const;
 	void set_sale_line_items(SaleLineItem** sale_line_items);
+	void add_sale_line_item(SaleLineItem* sale_line_item);
 	Receipt** get_receipt() const;
 	void set_receipt(Receipt** receipt);
 	Customer* get_customer() const;

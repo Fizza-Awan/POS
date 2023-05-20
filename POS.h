@@ -4,12 +4,16 @@
 
 #include "Sale.h"
 #include <iostream>
-#include<string>
+#include <string>
 #include <ctime>
 
 using std::cout;
 using std::cin;
 using std::endl;
+
+class Item;
+class Receipt;
+class Customer;
 
 class POS
 {
@@ -51,6 +55,6 @@ public:
 	void addItem(Item* item);
 	void addCustomer(Customer* customer);
 	Sale* FindSale(int saleid);
-	void AddNewReceipts(Sale* sale);
+	void AddNewReceipts(Receipt* receipt);
 };
 #endif

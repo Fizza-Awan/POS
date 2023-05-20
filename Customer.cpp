@@ -8,6 +8,12 @@
 //{
 //}
 
+CustomerTypes CustomerTypesFromString(string CustomerTypesInt) {
+	if (CustomerTypesInt == "2") return CustomerTypes::Platinum;
+	else if (CustomerTypesInt == "1") return CustomerTypes::Gold;
+	else return CustomerTypes::Silver;
+}
+
 Customer *Customer::GetCustomer(string CNIC, string Name, string Address, string Phone, string Email, CustomerTypes Type)
 {
 	Customer* customer = nullptr;
@@ -26,6 +32,27 @@ Customer *Customer::GetCustomer(string CNIC, string Name, string Address, string
 		//n_customer++;
 	}
 	return customer;
+}
+
+Customer *Customer::fromString(string item)
+{
+	string CNIC;
+	string Name;
+	string Address;
+	string Phone;
+	string Email;
+	CustomerTypes Type;
+
+	std::stringstream ss(item.substr(1, item.length()-2));
+	getline(ss, CNIC, ',');
+	getline(ss, Name, ',');
+	getline(ss, Address, ',');
+	getline(ss, Phone, ',');
+	getline(ss, Email, ',');
+	string TypeInt;
+	getline(ss, TypeInt, ',');
+	Type = CustomerTypesFromString(TypeInt);
+    return Customer::GetCustomer(CNIC, Name, Address, Phone, Email, Type);
 }
 
 int Customer::get_n_sale() const

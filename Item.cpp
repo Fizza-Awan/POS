@@ -1,4 +1,26 @@
 #include "Item.h"
+#include <sstream>
+
+Item* Item::fromString(string item)
+{
+	string item_SKU;
+	string Description;
+	float Price;
+	int AvailableQuantity;
+	string CreationDate;
+
+	std::stringstream ss(item.substr(1, item.length()-2));
+	getline(ss, item_SKU, ',');
+	getline(ss, Description, ',');
+	string Price_s;
+	getline(ss, Price_s, ',');
+	Price = stof(Price_s);
+	string AvailableQuantity_s;
+	getline(ss, AvailableQuantity_s, ',');
+	AvailableQuantity = stoi(AvailableQuantity_s);
+	getline(ss, CreationDate, ',');
+    return new Item(item_SKU, Description, Price, AvailableQuantity, CreationDate);
+}
 
 int Item::get_n_sale_line_items() const
 {
