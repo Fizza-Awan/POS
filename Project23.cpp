@@ -1,6 +1,7 @@
-#include<conio.h>
+#include <conio.h>
 #include <iostream>
-#include<fstream>
+#include <fstream>
+#include <sstream>
 
 #include "Item.h"
 #include "SilverCustomer.h"
@@ -52,65 +53,103 @@ void printSalesMenu()
 		<< "Choose from option 1 - 4: ";
 }
 
+string checkSection(string line) {
+	string sections[] = {"Item", "Customer", "Sales", "SalesLineItem", "Receipt", "POS"};
+	for (int i = 0; i < 6; i++) {
+		if (line == sections[i]) return line;
+	}
+	return "";
+}
+
 int main() {
-	ifstream fin("pos.txt");
-	if (!fin) {
-		cout << "Error opening file!" << endl;
-		return 1;
-	}
-
-	string line;
-	string section;
-
-	while (getline(fin, line)) {
-		if (line.empty())
-			continue;
-
-		if (line == "Item") {
-			section = "Item";
-			continue;
-		}
-		else if (line == "Customer") {
-			section = "Customer";
-			continue;
-		}
-		else if (line == "Sales") {
-			section = "Sales";
-			continue;
-		}
-		else if (line == "SalesLineItem") {
-			section = "SalesLineItem";
-			continue;
-		}
-		else if (line == "Receipt") {
-			section = "Receipt";
-			continue;
-		}
-		else if (line == "POS") {
-			section = "POS";
-			continue;
-		}
-
-		if (section == "Item") {
-		}
-		else if (section == "Customer") {
-		}
-		else if (section == "Sales") {
-		}
-		else if (section == "SalesLineItem") {
-		}
-		else if (section == "Receipt") {
-		}
-		else if (section == "POS") {
-		}
-	}
-	fin.close();
-
-	Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Gold);
-	Item* item = new Item("123", "Alus", 40, 20, "07/05/2023");
 	POS* pos = new POS();
-	pos->addItem(item);
-	pos->addCustomer(customer);
+
+	ifstream fin("pos.txt");
+	if (fin) {
+		string line;
+		string section;
+
+		Item** items = nullptr;
+		int n_items = 0;
+		Customer** customers = nullptr;
+		int n_customers = 0;
+		Sale** sales = nullptr;
+		int n_sales = 0;
+		SaleLineItem** saleLineItems = nullptr;
+		int n_saleLineItem = 0;
+		Receipt** receipts = nullptr;
+		int n_receipts = 0;
+
+		while (getline(fin, line)) {
+			if (line.empty())
+				continue;
+
+			if (!checkSection(line).empty()) {
+				section = checkSection(line);
+				getline(fin, line);
+			}
+
+			if (section == "Item") {
+				cout << section << " " << line << endl;
+				Item* item = Item::fromString(line);
+				addElementToArray<Item>(items, n_items, item);
+			}
+			else if (section == "Customer") {
+				cout << section << " " << line << endl;
+				Customer* item = Customer::fromString(line);
+				addElementToArray<Customer>(customers, n_customers, item);
+			}
+			else if (section == "Sales") {
+				cout << section << " " << line << endl;
+				Sale* item = Sale::fromString(line, customers, n_customers);
+				addElementToArray<Sale>(sales, n_sales, item);
+			}
+			else if (section == "SalesLineItem") {
+				cout << section << " " << line << endl;
+				SaleLineItem* item = SaleLineItem::fromString(line, items, n_items, sales, n_sales);
+				addElementToArray<SaleLineItem>(saleLineItems, n_saleLineItem, item);
+			}
+			else if (section == "Receipt") {
+				cout << section << " " << line << endl;
+				Receipt* item = Receipt::fromString(line, sales, n_sales);
+				addElementToArray<Receipt>(receipts, n_receipts, item);
+			}
+			else if (section == "POS") {
+				cout << section << " " << line << endl;
+				pos->set_items(items);
+				Item::TotalCount = n_items;
+				pos->set_customers(customers);
+				Customer::n_customer = n_customers;
+				pos->set_sales(sales);
+				Sale::n_sale = n_sales;
+				pos->set_receipts(receipts);
+				pos->set_n_receipts(n_receipts);
+			}
+		}
+		fin.close();
+	} else {
+		cout << "Error opening file!" << endl;
+		cout << "Using Test data" << endl;
+		Customer* customer = Customer::GetCustomer("3520299679023", "Asim", "Lahore", "03123456789", "a@b.c", CustomerTypes::Gold);
+		Item* item1 = new Item("123", "Alus", 40, 20, "07/05/2023");
+		Item* item2 = new Item("124", "Tinday", 25, 40, "07/05/2023");
+		SaleLineItem* saleLineItem1 = new SaleLineItem(2, item1->get_price()*2, item1);
+		SaleLineItem* saleLineItem2 = new SaleLineItem(2, item2->get_price()*3, item2);
+		SaleLineItem** saleLineItems = new SaleLineItem*[2];
+		saleLineItems[0] = saleLineItem1;
+		saleLineItems[1] = saleLineItem2;
+		Sale* sale = new Sale(customer, saleLineItems, 2, "07/05/2023");
+		Receipt* receipt = new Receipt(50);
+		Sale** sales = new Sale*[1];
+		sales[0] = sale;
+		pos->addItem(item1);
+		pos->addItem(item2);
+		pos->addCustomer(customer);
+		pos->set_sales(sales);
+		sale->AddPayment(receipt);
+		pos->AddNewReceipts(receipt);
+	}
+
 	int mainMenuOption = 0;
 	do {
 		printMainMenu();
@@ -160,12 +199,14 @@ int main() {
 					}
 					fout << pos->get_sales()[salesIndex]->get_sale_line_items()[pos->get_sales()[salesIndex]->getNSaleLineItems() - 1]->get_line_no()
 						<< "]" << ","
-						<< "[";
-					for (int receiptIndex = 0; receiptIndex < pos->get_sales()[salesIndex]->get_n_receipt() - 1; receiptIndex++) {
-						fout << pos->get_sales()[salesIndex]->get_receipt()[receiptIndex]->get_receipt_no() << ",";
-					}
-					fout << pos->get_sales()[salesIndex]->get_receipt()[pos->get_sales()[salesIndex]->get_n_receipt() - 1]->get_receipt_no()
-						<< "]" << ","
+					// 	<< "[";
+					// for (int receiptIndex = 0; receiptIndex < pos->get_sales()[salesIndex]->get_n_receipt() - 1; receiptIndex++) {
+					// 	fout << pos->get_sales()[salesIndex]->get_receipt()[receiptIndex]->get_receipt_no() << ",";
+					// }
+					// if (pos->get_sales()[salesIndex]->get_n_receipt() == 1) {
+					// 	fout << pos->get_sales()[salesIndex]->get_receipt()[pos->get_sales()[salesIndex]->get_n_receipt() - 1]->get_receipt_no();
+					// }
+					// fout << "]" << ","
 						<< pos->get_sales()[salesIndex]->get_date() << ","
 						<< pos->get_sales()[salesIndex]->is_status()
 						<< ")"
@@ -173,14 +214,14 @@ int main() {
 				}
 				fout << "SalesLineItem" << endl;
 				for (int salesIndex = 0; salesIndex < Sale::n_sale; salesIndex++) {
-					fout << "(";
 					for (int saleLineItemIndex = 0; saleLineItemIndex < pos->get_sales()[salesIndex]->getNSaleLineItems(); saleLineItemIndex++) {
-						fout << pos->get_sales()[salesIndex]->get_sale_line_items()[saleLineItemIndex]->get_line_no() << ","
+						fout << "("
+						    << pos->get_sales()[salesIndex]->get_sale_line_items()[saleLineItemIndex]->get_line_no() << ","
 							<< pos->get_sales()[salesIndex]->get_sale_id() << ","
 							<< pos->get_sales()[salesIndex]->get_sale_line_items()[saleLineItemIndex]->get_item()->get_item_sku() << ","
-							<< pos->get_sales()[salesIndex]->get_sale_line_items()[saleLineItemIndex]->get_quantity();
+							<< pos->get_sales()[salesIndex]->get_sale_line_items()[saleLineItemIndex]->get_quantity()
+							<< ")" << endl;
 					}
-					fout << ")" << endl;
 				}
 			}
 			if (pos->get_n_receipts() > 0)
@@ -239,7 +280,7 @@ int main() {
 			cout << "Sale ID: ";
 			cin >> Saleid;
 			Sale* Sale = pos->FindSale(Saleid);
-			customer = Sale->get_customer();
+			Customer* customer = Sale->get_customer();
 			if (!Sale)
 			{
 				cout << "No Sale ID found!" << endl << endl;
@@ -257,7 +298,7 @@ int main() {
 				customer->set_amount_payable(customer->get_amount_payable() - amountToBePaid);
 				auto* receipt = new Receipt(amountToBePaid);
 				Sale->AddPayment(receipt);
-				pos->AddNewReceipts(Sale);
+				pos->AddNewReceipts(receipt);
 			}
 		}
 		else if (mainMenuOption == 3) {
@@ -266,7 +307,7 @@ int main() {
 			time(&now);
 
 			tm localTime;
-			localtime_s(&localTime, &now);
+			localtime_r(&now, &localTime);
 			string date = to_string(localTime.tm_mday) + "/" +
 				to_string(localTime.tm_mon + 1) + "/" +
 				to_string(localTime.tm_year + 1900);
@@ -276,7 +317,7 @@ int main() {
 				<< "Enter CNIC: ";
 			string cnic;
 			cin >> cnic;
-			customer = pos->FindCustomer(cnic);
+			Customer* customer = pos->FindCustomer(cnic);
 
 			if (customer == nullptr)
 				cout << "Customer Not Found!" << endl;
@@ -362,8 +403,8 @@ int main() {
 								<< "-----------------------------------------------------------------------------------------------------------------------"
 								<< endl;
 							cout << "Press any key to continue!" << endl;
-							_getch();
-							auto* sales = new Sale(customer, saleLineItems, n_saleLineItems, date);
+							getch();
+							Sale* sales = new Sale(customer, saleLineItems, n_saleLineItems, date);
 							pos->AddNewSale(sales);
 						}
 					}

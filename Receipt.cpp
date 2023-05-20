@@ -13,7 +13,7 @@ Receipt::Receipt( float amount): amount(amount)
 	time(&now);
 
 	tm localTime;
-	localtime_r(&now, &localTime);
+	localtime_s(&localTime, &now);
 	ReceiptDate = std::to_string(localTime.tm_mday) + "/" +
 		std::to_string(localTime.tm_mon + 1) + "/" +
 		std::to_string(localTime.tm_year + 1900);
