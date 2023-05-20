@@ -105,7 +105,12 @@ SaleLineItem* POS::EnterNewItemInSaleLine()
 		cin >> quantity;
 		float SubTotal = quantity * item->get_price();
 
+		if (item->get_available_quantity() < quantity) {
+			return nullptr;
+		}
+
 		cout << "Sub-Total: " << SubTotal << endl;
+		item->set_available_quantity(item->get_available_quantity()-quantity);
 		auto* saleLineItem = new SaleLineItem(quantity, SubTotal, item);
 		item->addSaleLineItem(saleLineItem);
 		return saleLineItem;

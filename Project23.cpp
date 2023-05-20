@@ -116,14 +116,22 @@ int main() {
 			}
 			else if (section == "POS") {
 				cout << section << " " << line << endl;
-				pos->set_items(items);
-				Item::TotalCount = n_items;
-				pos->set_customers(customers);
-				Customer::n_customer = n_customers;
+				for (int i = 0; i < n_items; i++) {
+					pos->addItem(items[i]);
+				}
+				// pos->set_items(items);
+				// Item::TotalCount = n_items;
+				for (int i = 0; i < n_customers; i++) {
+					pos->addCustomer(customers[i]);
+				}
+				// Customer::n_customer = n_customers;
 				pos->set_sales(sales);
 				Sale::n_sale = n_sales;
-				pos->set_receipts(receipts);
-				pos->set_n_receipts(n_receipts);
+				// pos->set_receipts(receipts);
+				// pos->set_n_receipts(n_receipts);
+				for (int i = 0; i < n_receipts; i++) {
+					pos->AddNewReceipts(receipts[i]);
+				}
 			}
 		}
 		fin.close();
@@ -410,10 +418,10 @@ int main() {
 					}
 					else if (sale_option == 1) {
 						saleLineItem = pos->EnterNewItemInSaleLine();
-						if (saleLineItem == nullptr)
-							cout << "Item not found!" << endl;
-						else if (saleLineItem->get_item()->get_available_quantity() < 1)
+						if (saleLineItem->get_item()->get_available_quantity() < 1)
 							cout << "Out Of Stock!" << endl;
+						else if (saleLineItem == nullptr)
+							cout << "Item not found!" << endl;
 						else {
 							customer->set_amount_payable(saleLineItem->get_SubTotal());
 							cout << "Total Amount Payable: " << customer->get_amount_payable() << endl;
